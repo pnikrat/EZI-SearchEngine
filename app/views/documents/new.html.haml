@@ -1,0 +1,9 @@
+%h2 Upload the source files
+= form_tag({ action: :create }, multipart: true) do
+  = label_tag 'File containing documents'
+  = file_field_tag 'document_file'
+
+  = label_tag 'File containing keywords'
+  = file_field_tag 'term_file'
+
+  = submit_tag 'Upload files'

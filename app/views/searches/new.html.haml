@@ -1,0 +1,6 @@
+%h2 EZI Document search engine
+= link_to 'Upload new document and terms collections', new_document_path
+.search_field
+  = form_for @search, url: { action: 'create' } do |f|
+    = f.text_field :query
+    = f.submit 'Search'
