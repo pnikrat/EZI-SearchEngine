@@ -10,6 +10,7 @@ class CollectionsController < ApplicationController
     terms_file = permitted[:term_file]
     Collection.create_or_update_file('documents', documents_file.original_filename)
     Collection.create_or_update_file('terms', terms_file.original_filename)
+    StemmingService.new(documents_file.tempfile, terms_file.tempfile).call
     flash[:success] = 'Files correctly uploaded and indexed'
     redirect_to new_search_path
   end
