@@ -1,6 +1,10 @@
 %h2 EZI Document search engine
-= link_to 'Upload new document and terms collections', new_document_path
-.search_field
-  = form_for @search, url: { action: 'create' } do |f|
-    = f.text_field :query
-    = f.submit 'Search'
+= link_to 'Upload new document and terms collections', new_collection_path
+- if @collections.count == 2
+  .current_settings
+    - @collections.each do |c|
+      %p Current #{c.description} file: #{c.filename}
+  .search_field
+    = form_for @search, url: { action: 'create' } do |f|
+      = f.text_field :query
+      = f.submit 'Search'

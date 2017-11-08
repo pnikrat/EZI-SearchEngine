@@ -1,6 +1,8 @@
 class SearchesController < ApplicationController
   def new
     @search = Search.new
+    @collections = Collection.where(description: 'documents')
+                             .or(Collection.where(description: 'terms'))
   end
 
   def create

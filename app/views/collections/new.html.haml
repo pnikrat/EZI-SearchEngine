@@ -1,9 +1,10 @@
+= link_to 'Return', new_search_path
 %h2 Upload the source files
 = form_tag({ action: :create }, multipart: true) do
   = label_tag 'File containing documents'
-  = file_field_tag 'document_file'
+  = file_field_tag 'document_file', accept: 'text/*'
 
   = label_tag 'File containing keywords'
-  = file_field_tag 'term_file'
+  = file_field_tag 'term_file', accept: 'text/*'
 
   = submit_tag 'Upload files'
