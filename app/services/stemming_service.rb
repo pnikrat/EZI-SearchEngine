@@ -10,7 +10,7 @@ class StemmingService
     cleanup_previous_documents_and_terms
     stemmify_documents
     stemmify_terms
-    TfIdfService.new.call
+    IdfService.new.call
   end
 
   private

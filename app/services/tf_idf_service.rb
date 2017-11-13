@@ -1,24 +1,25 @@
 class TfIdfService
-  def call
-    calculate_idf
-    binding.pry
+  def call(document, idf_vector = nil)
+    @document = document
+    @idf_vector = if idf_vector.nil?
+                    Term.alphabetical.pluck(:idf)
+                  else
+                    idf_vector
+                  end
+    calculate_tfidf
   end
 
   private
 
-  def calculate_idf
-    documents = Document.count.to_f
-    Term.all.each do |t|
-      documents_with_term = count_documents_with_term(t.stem)
-      t.update(idf: Math.log10(documents / documents_with_term))
+  def calculate_tfidf
+    document_vector = []
+    document_stem = @document.stem.split(' ')
+    Term.alphabetical.each do |t|
+      document_vector << document_stem.count(t.stem)
     end
-  end
-
-  def count_documents_with_term(term_stem)
-    count = 0
-    Document.all.each do |d|
-      count += 1 if d.stem.include?(term_stem)
-    end
-    count.to_f
+    top_term = document_vector.max
+    document_vector.map! { |element| element / top_term.to_f }
+    tfidf_vector = document_vector.zip(@idf_vector).map { |tf, idf| tf * idf }
+    @document.update(tfidf_vector: tfidf_vector)
   end
 end

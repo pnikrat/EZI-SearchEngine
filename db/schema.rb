@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171109095430) do
+ActiveRecord::Schema.define(version: 20171113220755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20171109095430) do
     t.text "stem"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "tfidf_vector"
   end
 
   create_table "searches", force: :cascade do |t|
