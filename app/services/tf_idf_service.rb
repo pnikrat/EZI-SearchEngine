@@ -18,7 +18,7 @@ class TfIdfService
       document_vector << document_stem.count(t.stem)
     end
     top_term = document_vector.max
-    document_vector.map! { |element| element / top_term.to_f }
+    document_vector.map! { |element| element / top_term.to_f } unless top_term.zero?
     tfidf_vector = document_vector.zip(@idf_vector).map { |tf, idf| tf * idf }
     @document.update(tfidf_vector: tfidf_vector)
   end
