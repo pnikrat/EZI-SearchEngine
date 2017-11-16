@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171113232308) do
+ActiveRecord::Schema.define(version: 20171116214757) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20171113232308) do
     t.datetime "updated_at", null: false
     t.text "tfidf_vector"
     t.float "cosine_similarity"
+    t.index ["cosine_similarity"], name: "index_documents_on_cosine_similarity"
   end
 
   create_table "searches", force: :cascade do |t|

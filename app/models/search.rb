@@ -1,14 +1,12 @@
 require 'stemmify'
 
 class Search < ApplicationRecord
+  serialize :tfidf_vector, Array
+
   def find_results
     stemmify_query
     TfIdfService.new.call(self)
-    # develop cosine similarity service
-  end
-
-  def tfidf_as_array
-    tfidf_vector.tr('[]', '').split(', ').map!(&:to_f) unless tfidf_vector.nil?
+    CosineSimilarityService.new(self).call
   end
 
   private

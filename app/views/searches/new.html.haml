@@ -4,7 +4,12 @@
   .current_settings
     - @collections.each do |c|
       %p Current #{c.description} file: #{c.filename}
-  .search_field
+  .search_field{"data-previous-query" => "#{@previous_query}"}
     = form_for @search, url: { action: 'create' } do |f|
       = f.text_field :query
       = f.submit 'Search'
+  - unless @found_documents.nil?
+    - @found_documents.each do |d|
+      .single_result
+        %p #{d.title}
+        %p #{d.cosine_similarity}
