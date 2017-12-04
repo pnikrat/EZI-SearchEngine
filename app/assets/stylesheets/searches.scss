@@ -1,6 +1,23 @@
 // Place all the styles related to the Searches controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+h2 {
+  .logo {
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    &:hover {
+      color: white;
+      background-color: #4CAF50;
+    }
+  }
+}
+
 .single_result {
   margin-bottom: 15px;
   p {

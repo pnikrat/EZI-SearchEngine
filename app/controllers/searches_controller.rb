@@ -10,7 +10,9 @@ class SearchesController < ApplicationController
 
   def create
     my_search = Search.create(search_params)
-    my_search.find_results if my_search.query != Search.last(2).first.query
+    if my_search.query != Search.last(2).first.query || Document.last.cosine_similarity.nil?
+      my_search.find_results
+    end
     redirect_to new_search_path(query: my_search.query)
   end
 
