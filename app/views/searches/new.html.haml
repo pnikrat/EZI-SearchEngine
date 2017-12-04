@@ -6,6 +6,8 @@
   .current_settings
     - @collections.each do |c|
       %p Current #{c.description} file: #{c.filename}
+    %p Current search mode: #{@expanding_mode ? 'Query Expanding Mode' : 'Regular Search'}
+    = link_to 'Toggle mode', toggle_mode_path
   .search_field{"data-previous-query" => "#{@previous_query}"}
     = form_for @search, url: { action: 'create' } do |f|
       = f.text_field :query

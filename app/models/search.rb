@@ -7,6 +7,8 @@ class Search < ApplicationRecord
     stemmify_query
     TfIdfService.new.call(self)
     CosineSimilarityService.new(self).call
+    return unless QueryExpandingMode.active?
+    CMatrixService.new(self).call
   end
 
   private

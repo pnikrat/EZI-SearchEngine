@@ -30,7 +30,7 @@ end
 
 def delegate_tfidf
   idf_vector = Term.alphabetical.pluck(:idf)
-  Document.all.each do |d|
+  Document.alphabetical.each do |d|
     TfIdfService.new.call(d, idf_vector)
   end
 end

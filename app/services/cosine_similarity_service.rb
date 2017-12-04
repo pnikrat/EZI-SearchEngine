@@ -12,8 +12,8 @@ class CosineSimilarityService
   def calculate_cosine_similarity
     ActiveRecord::Base.transaction do
       Document.select(:id, :tfidf_vector, :cosine_similarity).all.each do |d|
-        numerator = scalar_product(d.tfidf_vector, @search.tfidf_vector)
-        denominator = magnitude(d.tfidf_vector) * magnitude(@search.tfidf_vector)
+        numerator = VectorOperations.scalar_product(d.tfidf_vector, @search.tfidf_vector)
+        denominator = VectorOperations.magnitude(d.tfidf_vector) * VectorOperations.magnitude(@search.tfidf_vector)
         if denominator.zero?
           d.update_columns(cosine_similarity: 0.0)
         else
@@ -21,13 +21,5 @@ class CosineSimilarityService
         end
       end
     end
-  end
-
-  def scalar_product(a, b)
-    (0...a.count).inject(0) { |sum, i| sum + a[i] * b[i] }
-  end
-
-  def magnitude(a)
-    Math.sqrt(a.map { |x| x**2 }.reduce(:+))
   end
 end
