@@ -2,12 +2,14 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
     %title SearchEngine
     = csrf_meta_tags
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    - flash.each do |type, msg|
-      %div{class: "alert alert-#{type}"}
-        = msg
-    = yield
+    .main_div
+      - flash.each do |type, msg|
+        %div{class: "alert alert-#{type}"}
+          = msg
+      = yield

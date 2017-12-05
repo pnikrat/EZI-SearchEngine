@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171204214817) do
+ActiveRecord::Schema.define(version: 20171205193625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 20171204214817) do
     t.datetime "updated_at", null: false
     t.string "stem"
     t.text "tfidf_vector"
+    t.bigint "search_id"
+    t.index ["search_id"], name: "index_searches_on_search_id"
   end
 
   create_table "terms", force: :cascade do |t|
@@ -56,4 +58,5 @@ ActiveRecord::Schema.define(version: 20171204214817) do
     t.float "idf"
   end
 
+  add_foreign_key "searches", "searches"
 end

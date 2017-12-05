@@ -27,3 +27,29 @@ h2 {
     margin-bottom: 2px;
   }
 }
+
+.new_search {
+  input[type=text] {
+    width: 40%;
+  }
+  input[type=submit] {
+    width: 20%;
+  }
+}
+
+.query_expanding {
+  p {
+    margin-bottom: 4px;
+  }
+  .proposal {
+    margin-bottom: 5px;
+    &:last-child {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+hr {
+  width: 65%;
+  margin-left: 0px;
+}

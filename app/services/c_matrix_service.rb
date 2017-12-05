@@ -7,7 +7,7 @@ class CMatrixService
 
   def call
     calculate_cmatrix
-
+    maximize_coexistence
   end
 
   private
@@ -21,8 +21,22 @@ class CMatrixService
     normalized_rows = term_document_matrix.row_vectors.map { |row| normalize_by_magnitude(row) }
     norm_term_document_matrix = Matrix.rows(normalized_rows)
     @cmatrix = (norm_term_document_matrix * norm_term_document_matrix.t).round(6)
-    # to find term index based on stem
-    # Term.alphabetical.pluck(:stem).index('classif')
+  end
+
+  def maximize_coexistence
+    query_terms = @search.stem.split(' ')
+    position_in_cmatrix = []
+    query_terms.each do |t|
+      position_in_cmatrix << Term.alphabetical.pluck(:stem).index(t)
+    end
+    position_in_cmatrix = position_in_cmatrix.compact # remove nils
+    return if position_in_cmatrix.empty?
+    term_columns = position_in_cmatrix.map { |pos| @cmatrix.column_vectors[pos] }
+    total = term_columns.sum
+    hashed_totals = Hash[(0...total.size).zip(total)]
+    position_in_cmatrix.each { |banned| hashed_totals.delete(banned) }
+    proposals = hashed_totals.sort_by { |k, v| -v }.first(5).map(&:first)
+    proposals.map { |prop| Term.alphabetical.pluck(:full)[prop] }
   end
 
   def normalize_by_magnitude(v)

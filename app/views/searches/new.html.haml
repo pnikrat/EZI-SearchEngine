@@ -8,11 +8,20 @@
       %p Current #{c.description} file: #{c.filename}
     %p Current search mode: #{@expanding_mode ? 'Query Expanding Mode' : 'Regular Search'}
     = link_to 'Toggle mode', toggle_mode_path
-  .search_field{"data-previous-query" => "#{@previous_query}"}
+  .search_field{"data-previous-query" => "#{@previous_search_query}"}
     = form_for @search, url: { action: 'create' } do |f|
       = f.text_field :query
       = f.submit 'Search'
+  - if @expanding_mode && !@previous_search.nil?
+    - if @previous_search.similar_searches.present?
+      .query_expanding
+        %p Similar searches:
+        - @previous_search.similar_searches.order(:id).each do |search|
+          .proposal
+            %a.proposal_query{href: '#'}
+              #{search.query}
   - unless @found_documents.nil?
+    %hr
     - @found_documents.each do |d|
       .single_result
         %p #{d.title}
