@@ -9,6 +9,7 @@ class StemmingService
   def call
     cleanup_previous_documents_and_terms
     stemmify_documents
+    save_document unless @current_document[:title].empty?
     stemmify_terms
     IdfService.new.call
   end
