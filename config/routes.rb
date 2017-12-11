@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :searches
   resources :documents
   resources :collections
+  resources :groupings
 end

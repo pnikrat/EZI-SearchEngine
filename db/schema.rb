@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171205193625) do
+ActiveRecord::Schema.define(version: 20171211212739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,17 @@ ActiveRecord::Schema.define(version: 20171205193625) do
     t.text "tfidf_vector"
     t.float "cosine_similarity"
     t.text "stemcount_vector"
+    t.string "klass"
     t.index ["cosine_similarity"], name: "index_documents_on_cosine_similarity"
+    t.index ["title"], name: "index_documents_on_title"
+  end
+
+  create_table "groupings", force: :cascade do |t|
+    t.integer "number_of_groups"
+    t.float "minimum_similarity"
+    t.boolean "similarity_stop_condition"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "query_expanding_modes", force: :cascade do |t|

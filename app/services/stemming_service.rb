@@ -22,11 +22,15 @@ class StemmingService
   end
 
   def stemmify_documents
-    @current_document = { title: '', body: '', stem: '' }
+    @current_document = { title: '', body: '', stem: '', klass: nil }
     File.readlines(@documents_file).each do |line|
       line = line.chomp
       if line.empty? # next document
         save_document
+        next
+      end
+      if grouping_classes.include?(clear_line(line))
+        @current_document[:klass] = clear_line(line)
         next
       end
       prepared_line = stemmify_line(clear_line(line))
@@ -43,7 +47,8 @@ class StemmingService
   def save_document
     Document.create(title: fix_encoding(@current_document[:title]),
                     body: fix_encoding(@current_document[:body]).strip,
-                    stem: @current_document[:stem].strip)
+                    stem: @current_document[:stem].strip,
+                    klass: @current_document[:klass])
     @current_document = { title: '', body: '', stem: '' }
   end
 
@@ -66,5 +71,12 @@ class StemmingService
       stemmed_term = original_term.stem
       Term.create(full: original_term, stem: stemmed_term)
     end
+  end
+
+  def grouping_classes
+    [
+      'anaconda', 'animal planet', 'javaisland', 'javaprogramming',
+      'meatpuppets', 'perl', 'python', 'pythonsnake', 'svd'
+    ]
   end
 end

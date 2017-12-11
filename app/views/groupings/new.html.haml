@@ -1,0 +1,15 @@
+- content_for :logo do
+  = render partial: 'shared/logo', locals: { path: new_grouping_path }
+= link_to 'Return to regular search mode', root_path
+.grouping_form
+  = form_for @grouping, url: { action: 'create' } do |f|
+    = label_tag 'Number of groups'
+    = f.number_field :number_of_groups, min: 2, max: 9, step: 1, value: 2
+    = label_tag 'Minimum similarity'
+    = f.number_field :minimum_similarity, step: 0.01, value: 85.56
+    = label_tag 'Choose stop condition'
+    = f.radio_button :similarity_stop_condition, false, checked: true
+    = f.label :similarity_stop_condition, 'Number of groups', value: false
+    = f.radio_button :similarity_stop_condition, true
+    = f.label :similarity_stop_condition, 'Minimum similarity', value: true
+    = f.submit 'Begin grouping'
