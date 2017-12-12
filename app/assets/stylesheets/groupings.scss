@@ -1,7 +1,37 @@
 // Place all the styles related to the Groupings controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-input[type=number] {
-  width: 10%;
-  min-width: 40px;
+.grouping_form {
+  padding-top: 10px;
+}
+.all_groups {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.single_group {
+  width: 20%;
+}
+.grouping_divider {
+  width: 100%;
+}
+.radio_input {
+  display: flex;
+  width: 20%;
+  margin-top: 10px;
+  input[type=radio] {
+    margin: 3px 0 0 0;
+  }
+  label {
+    margin-left: 20px;
+  }
+}
+.numeric_input {
+  display: flex;
+  margin-bottom: 20px;
+  input[type=number] {
+    width: 10%;
+    min-width: 40px;
+    margin: 0 10px 0 0;
+  }
 }

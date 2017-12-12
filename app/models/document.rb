@@ -4,6 +4,6 @@ class Document < ApplicationRecord
   serialize :stemcount_vector, Array
 
   def self.alphabetical(offset = 0)
-    all.order(title: :asc).offset(offset)
+    order(title: :asc).offset(offset).all
   end
 end

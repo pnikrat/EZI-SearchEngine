@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171211212739) do
+ActiveRecord::Schema.define(version: 20171212185556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,11 @@ ActiveRecord::Schema.define(version: 20171211212739) do
   create_table "collections", force: :cascade do |t|
     t.string "description"
     t.string "filename"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "document_groups", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -32,7 +37,9 @@ ActiveRecord::Schema.define(version: 20171211212739) do
     t.float "cosine_similarity"
     t.text "stemcount_vector"
     t.string "klass"
+    t.bigint "document_group_id"
     t.index ["cosine_similarity"], name: "index_documents_on_cosine_similarity"
+    t.index ["document_group_id"], name: "index_documents_on_document_group_id"
     t.index ["title"], name: "index_documents_on_title"
   end
 
@@ -68,5 +75,6 @@ ActiveRecord::Schema.define(version: 20171211212739) do
     t.float "idf"
   end
 
+  add_foreign_key "documents", "document_groups"
   add_foreign_key "searches", "searches"
 end

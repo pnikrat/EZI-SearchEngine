@@ -1,15 +1,28 @@
 - content_for :logo do
   = render partial: 'shared/logo', locals: { path: new_grouping_path }
 = link_to 'Return to regular search mode', root_path
-.grouping_form
+.grouping_form{"data-nog" => "#{@grouping_nog}", "data-sim" => "#{@grouping_sim}", "data-sim-stop" => "#{@grouping_sim_stop}"}
   = form_for @grouping, url: { action: 'create' } do |f|
-    = label_tag 'Number of groups'
-    = f.number_field :number_of_groups, min: 2, max: 9, step: 1, value: 2
-    = label_tag 'Minimum similarity'
-    = f.number_field :minimum_similarity, step: 0.01, value: 85.56
+    .numeric_input
+      = f.number_field :number_of_groups, min: 1, max: 103, step: 1, value: 9
+      = label_tag 'Number of groups'
+    .numeric_input
+      = f.number_field :minimum_similarity, min: 0.01, max: 0.99, step: 0.01, value: 0.65
+      = label_tag 'Minimum similarity'
     = label_tag 'Choose stop condition'
-    = f.radio_button :similarity_stop_condition, false, checked: true
-    = f.label :similarity_stop_condition, 'Number of groups', value: false
-    = f.radio_button :similarity_stop_condition, true
-    = f.label :similarity_stop_condition, 'Minimum similarity', value: true
+    .radio_input
+      = f.radio_button :similarity_stop_condition, false, checked: true
+      = f.label :similarity_stop_condition, 'Number of groups', value: false
+    .radio_input
+      = f.radio_button :similarity_stop_condition, true
+      = f.label :similarity_stop_condition, 'Minimum similarity', value: true
     = f.submit 'Begin grouping'
+- unless @document_groups.nil?
+  .all_groups
+    %hr.grouping_divider
+    - @document_groups.each_with_index do |group, idx|
+      .single_group
+        %b Group #{idx+1}
+        - group.documents.each do |doc|
+          .single_document
+            %p #{doc.klass}
